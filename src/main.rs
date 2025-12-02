@@ -1,7 +1,8 @@
 #![allow(unused)]
 
 mod day01;
+mod day02;
 
 fn main() {
-    day01::part_2();
+    day02::part_2();
 }
