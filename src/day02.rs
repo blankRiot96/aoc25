@@ -113,7 +113,7 @@ gen fn next(num: u64, max: u64) -> u64 {
 
 pub fn part_2() {
     let input = include_str!("inputs/day02.txt");
-    let mut gathered: HashSet<u64> = HashSet::new();
+    let mut gathered: HashSet<u64> = HashSet::with_capacity(2000);
     for (start, end) in get_ranges(input) {
         // println!("\n- - - -");
         // println!("Start: {start}, End: {end}");
