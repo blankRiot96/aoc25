@@ -2,6 +2,8 @@
 
 use std::collections::HashSet;
 
+const PRIMES: [u64; 5] = [1, 2, 3, 5, 7];
+
 fn parse_range(data: &str) -> (u64, u64) {
     let (start, end) = data.split_once("-").unwrap();
     (start.parse::<u64>().unwrap(), end.parse::<u64>().unwrap())
@@ -24,15 +26,6 @@ fn repeat(x: u64, n: u64, xlen: u64) -> u64 {
     }
     return res;
 }
-//
-// fn repeat(x: u64, n: u64, xlen: u64) -> u64 {
-//     let mut res = 0;
-//     let base = 10u64.pow(xlen as u32);
-//     for _ in 0..n {
-//         res = res * base + x;
-//     }
-//     res
-// }
 
 pub fn part_1() {
     let input = include_str!("inputs/day02.txt");
@@ -56,46 +49,99 @@ pub fn part_1() {
             let new = if right < left { left } else { left + 1 };
             let d = digits(new);
             num = repeat(new, 2, d);
-
-            
-            // println!("Next: {num}");
         }
     }
 
     println!("{sum}");
 }
 
-fn first_n_digits(num: u64, num_len: u64, first_how_many: u64) -> u64 {
-    num / 10u64.pow((num_len - first_how_many) as u32)
+
+gen fn div_marcher(num: u64, div: u64, num_len: u64) -> u64 {
+    let mut i = 1;
+    let mut block = num;
+    let mut block_len = num_len;
+    let mut base = 10u64.pow((block_len - div) as u32);
+    let divominator = 10u64.pow(div as u32);
+
+    for i in 1..=(num_len / div) {
+        let result = block / base;
+        block = block % base;
+        base /= divominator;
+        yield result;
+    }
+}
+
+gen fn next(num: u64, max: u64) -> u64 {
+    let num_len = digits(num);
+    for prime in (1..=(num/2)) {
+        // println!("- - ");
+        // println!("prime = {prime}");
+        let mut curr = num;
+        if num_len % prime != 0 {
+            // println!("Skipped becuz not divisible");
+            continue;
+        }
+        if prime >= num_len {
+            // println!("Breaking becuz my limits have been reached");
+            break;
+        }
+        
+        let mut divisions = div_marcher(curr, prime, num_len);
+        let mut anchor = divisions.next().unwrap();
+        // println!("initial anchor = {anchor}");
+        for div in divisions {
+            if div < anchor {
+                break;
+            } else if div > anchor {
+                anchor += 1;
+                break;
+            }
+        }
+        // println!("anchor = {anchor}");
+
+        loop {
+            curr = repeat(anchor, num_len / prime, prime);
+            if curr > max {
+                break;
+            }
+            // println!("Next: {curr}");
+            yield curr;
+            anchor += 1;
+        }
+    }
 }
 
 pub fn part_2() {
     let input = include_str!("inputs/day02.txt");
-    let mut sum = 0u64;
     let mut gathered: HashSet<u64> = HashSet::new();
-    let mut carry = false;
     for (start, end) in get_ranges(input) {
-        let mut n_digits = digits(start);
-        if n_digits != digits(end) {
-            carry = true;
-        }
-        'numloop: for num in start..=end {
-            if carry {
-                n_digits = digits(num);
+        // println!("\n- - - -");
+        // println!("Start: {start}, End: {end}");
+        let start_len = digits(start);
+        let end_len = digits(end);
+        let carry = end_len - start_len;
+        if carry > 0 {
+            // println!("Carry: {carry}");
+            let mid = 10u64.pow(start_len as u32);
+            for num in next(start, mid - 1) {
+                gathered.insert(num);
             }
+            for num in next(mid, end) {
+                gathered.insert(num);
+            }
+        } else {
+            for num in next(start, end) {
+                gathered.insert(num);
+            }
+        }
 
-            for n in 1..=(n_digits / 2) {
-                if repeat(first_n_digits(num, n_digits, n), n_digits / n, n) == num
-                    && !gathered.contains(&num)
-                {
-                    sum += num;
-                    gathered.insert(num);
-                    continue 'numloop;
-                }
-            }
-        }
-        // println!("- - - -");
+        // println!("End reached: {end}");
     }
-
+    let sum: u64 = gathered.iter().sum();
+    // right = 31898925685
+    // right = 4174379265
+    // println!("\n- - - -");
+    // println!("Expected: 31898925685");
+    // println!("Got:      {sum}");
     println!("{sum}");
 }

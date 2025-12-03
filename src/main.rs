@@ -1,4 +1,5 @@
 #![allow(unused)]
+#![feature(coroutines, gen_blocks)]
 
 mod day01;
 mod day02;
