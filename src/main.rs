@@ -3,7 +3,9 @@
 
 mod day01;
 mod day02;
+mod day03;
 
 fn main() {
-    day02::part_2();
+    let input = include_str!("inputs/day03.txt");
+    println!("{}", day03::part_1(input));
 }
