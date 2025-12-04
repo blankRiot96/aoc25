@@ -1,98 +1,111 @@
 use std::collections::HashSet;
-use std::sync::{Arc, Mutex};
-use std::thread;
 
-fn get_adjacent(grid: &[u8], pos: usize, glen: i32, out: &mut HashSet<(i32, i32)>) {
-    let ipos = pos as i32;
-    let row = ipos / glen;
-    let col = ipos % glen;
+fn get_n_adjacent(
+    grid: &Vec<Vec<char>>,
+    row: usize,
+    col: usize,
+    glen: i32,
+    dist: &mut HashSet<(usize, usize)>,
+) {
+    let irow = row as i32;
+    let icol = col as i32;
 
     let mut adj = 0;
-
-    for dx in [-1, 0, 1] {
-        for dy in [-1, 0, 1] {
-            if dx == 0 && dy == 0 {
+    for off_x in [-1, 0, 1] {
+        for off_y in [-1, 0, 1] {
+            if off_x == 0 && off_y == 0 {
                 continue;
             }
 
-            let r = row + dx;
-            let c = col + dy;
-
-            if r < 0 || r >= glen {
-                continue;
-            }
-            if c < 0 || c >= glen {
+            let trow = irow + off_x;
+            let tcol = icol + off_y;
+            if (trow < 0) || (trow >= glen) {
                 continue;
             }
 
-            let tpos = (r * glen + c) as usize;
-            if grid[tpos] == b'@' {
+            if (tcol < 0) || (tcol >= glen) {
+                continue;
+            }
+
+            let c = grid[trow as usize][tcol as usize];
+            if c == '@' {
                 adj += 1;
             }
         }
     }
 
     if adj < 4 {
-        out.insert((row, col));
+        dist.insert((row, col));
     }
 }
 
-pub fn part_1(grid_raw: &[u8]) -> usize {
-    let mut glen = 0;
-    for &c in grid_raw {
-        if c == b'\n' {
-            break;
-        }
-        glen += 1;
-    }
-    let glen_i = glen as i32;
+pub fn part_1(input: &str) -> usize {
+    let grid = input
+        .lines()
+        .map(|line| line.chars().collect::<Vec<char>>())
+        .collect::<Vec<Vec<char>>>();
+    let glen = grid.len() as i32;
 
-    let mut grid = Vec::with_capacity(glen * glen);
-    for &c in grid_raw {
-        if c != b'\n' {
-            grid.push(c);
-        }
-    }
+    let mut dist = HashSet::with_capacity(1500);
 
-    let grid = Arc::new(grid);
-    let threads = 8;
-
-    let dist = Arc::new(Mutex::new(HashSet::<(i32, i32)>::new()));
-
-    let rows_per = (glen + threads - 1) / threads;
-
-    let mut handles = Vec::new();
-
-    for t in 0..threads {
-        let start_row = t * rows_per;
-        if start_row >= glen {
-            break;
-        }
-
-        let end_row = ((t + 1) * rows_per).min(glen);
-
-        let grid = Arc::clone(&grid);
-        let dist = Arc::clone(&dist);
-
-        handles.push(thread::spawn(move || {
-            let mut local = HashSet::new();
-
-            for r in start_row..end_row {
-                for c in 0..glen {
-                    let pos = r * glen + c;
-                    if grid[pos] == b'@' {
-                        get_adjacent(&grid, pos, glen_i, &mut local);
-                    }
-                }
+    for (row, line) in grid.iter().enumerate() {
+        for (col, paper) in line.iter().enumerate() {
+            if *paper != '@' {
+                continue;
             }
-
-            dist.lock().unwrap().extend(local);
-        }));
+            get_n_adjacent(&grid, row, col, glen, &mut dist);
+        }
     }
 
-    for h in handles {
-        h.join().unwrap();
+    dist.len()
+}
+
+pub fn part_2(input: &str) -> usize {
+    let mut grid = input
+        .lines()
+        .map(|line| line.chars().collect::<Vec<char>>())
+        .collect::<Vec<Vec<char>>>();
+    let glen = grid.len() as i32;
+
+    let mut total = 0usize;
+    let mut prev_total = 0usize;
+
+    loop {
+        let mut dist: HashSet<(usize, usize)> = HashSet::with_capacity(100);
+        for (row, line) in grid.iter().enumerate() {
+            for (col, paper) in line.iter().enumerate() {
+                if *paper != '@' {
+                    continue;
+                }
+                get_n_adjacent(&grid, row, col, glen, &mut dist);
+            }
+        }
+
+        let mut count = 0;
+        for (row, col) in &dist {
+            grid[*row][*col] = '.';
+            count += 1;
+        }
+
+        // println!("Removed {count} rolls of paper:");
+        // for (row, line) in grid.iter().enumerate() {
+        //     for (col, paper) in line.iter().enumerate() {
+        //         print!("{paper}");
+        //     }
+        //     println!();
+        // }
+
+        if count == 0 {
+            break;
+        }
+
+        total += count;
+
+        if total == prev_total {
+            break;
+        }
+        prev_total = total;
     }
 
-    dist.lock().unwrap().len()
+    total
 }
