@@ -1,4 +1,3 @@
-
 pub fn part_1(input: &str) -> u64 {
     let mut sum = 0u64;
     for bank in input.lines() {
@@ -18,9 +17,11 @@ pub fn part_1(input: &str) -> u64 {
                 }
                 max = d;
                 maxi = i;
+
             } else if d > smax {
                 smax = d;
                 smaxi = i;
+
             }
         }
 
@@ -38,4 +39,16 @@ pub fn part_1(input: &str) -> u64 {
         }
     }
     sum
+}
+
+pub fn part_2(input: &str) -> u64 {
+    let mut digits = [0u64; 12];
+    
+    for bank in input.lines() {
+        
+    }
+
+    digits.iter().rev().enumerate().fold(0, |sum, (i, d)| {
+        sum + 10u64.pow(i as u32) * d
+    })
 }

@@ -39,13 +39,13 @@ pub fn part_1() {
                 num = 10u64.pow(n_digits as u32) + 10u64.pow(half as u32);
                 continue;
             }
-            
+
             let p = 10u64.pow(half as u32);
             let right = num % p;
             let left = num / p;
             if left == right {
                 sum += num;
-            } 
+            }
             let new = if right < left { left } else { left + 1 };
             let d = digits(new);
             num = repeat(new, 2, d);
@@ -54,7 +54,6 @@ pub fn part_1() {
 
     println!("{sum}");
 }
-
 
 gen fn div_marcher(num: u64, div: u64, num_len: u64) -> u64 {
     let mut i = 1;
@@ -73,7 +72,7 @@ gen fn div_marcher(num: u64, div: u64, num_len: u64) -> u64 {
 
 gen fn next(num: u64, max: u64) -> u64 {
     let num_len = digits(num);
-    for prime in (1..=(num/2)) {
+    for prime in (1..=(num / 2)) {
         // println!("- - ");
         // println!("prime = {prime}");
         let mut curr = num;
@@ -85,7 +84,7 @@ gen fn next(num: u64, max: u64) -> u64 {
             // println!("Breaking becuz my limits have been reached");
             break;
         }
-        
+
         let mut divisions = div_marcher(curr, prime, num_len);
         let mut anchor = divisions.next().unwrap();
         // println!("initial anchor = {anchor}");
