@@ -1,81 +1,75 @@
-use std::thread;
-use std::sync::{Arc, Mutex};
 use std::collections::HashSet;
+use std::sync::{Arc, Mutex};
+use std::thread;
 
-const GRID_CAP: usize = 1500;
-
-fn get_n_adjacent(grid: &[u8], pos: usize, glen: i32, dist: &mut HashSet<(i32, i32)>) {
+fn get_adjacent(grid: &[u8], pos: usize, glen: i32, out: &mut HashSet<(i32, i32)>) {
     let ipos = pos as i32;
-    let irow = ipos / glen;
-    let icol = ipos % glen;
-    let iglen = glen as i32;
-    
+    let row = ipos / glen;
+    let col = ipos % glen;
+
     let mut adj = 0;
-    for off_x in [-1, 0, 1] {
-        for off_y in [-1, 0, 1] {
-            if off_x == 0 && off_y == 0 {
+
+    for dx in [-1, 0, 1] {
+        for dy in [-1, 0, 1] {
+            if dx == 0 && dy == 0 {
                 continue;
             }
 
-            let trow = irow + off_x;
-            let tcol = icol + off_y;
-            if (trow < 0) || (trow >= iglen - 1) {
-                continue;
-            } 
+            let r = row + dx;
+            let c = col + dy;
 
-            if (tcol < 0) || (tcol >= iglen) {
+            if r < 0 || r >= glen {
                 continue;
             }
-            
-            let tpos = ((iglen * trow) + tcol) as usize;
+            if c < 0 || c >= glen {
+                continue;
+            }
+
+            let tpos = (r * glen + c) as usize;
             if grid[tpos] == b'@' {
-                adj += 1; 
+                adj += 1;
             }
         }
     }
-    
+
     if adj < 4 {
-        dist.insert((irow, icol));
+        out.insert((row, col));
     }
 }
 
-// pub fn part_1(grid: &[u8]) -> usize {
-//     let mut glen = 0;
-//     for c in grid {
-//         glen += 1;
-//         if *c == b'\n' {
-//             break;
-//         }
-//     }
-//     let mut dist: HashSet<(i32, i32)> = HashSet::with_capacity(1500);
-//
-//     for (pos, c) in grid.iter().enumerate() {
-//         if *c == b'@' {
-//             get_n_adjacent(&grid, pos, glen, &mut dist);
-//         }
-//     }
-//
-//     dist.len()
-// }
-
-pub fn part_1(grid: &[u8]) -> usize {
+pub fn part_1(grid_raw: &[u8]) -> usize {
     let mut glen = 0;
-    for &c in grid {
-        if c == b'\n' { break; }
+    for &c in grid_raw {
+        if c == b'\n' {
+            break;
+        }
         glen += 1;
     }
+    let glen_i = glen as i32;
 
+    let mut grid = Vec::with_capacity(glen * glen);
+    for &c in grid_raw {
+        if c != b'\n' {
+            grid.push(c);
+        }
+    }
+
+    let grid = Arc::new(grid);
     let threads = 8;
-    let chunk = grid.len() / threads;
 
-    let dist = Arc::new(Mutex::new(HashSet::<(i32, i32)>::with_capacity(1500)));
-    let grid = Arc::new(grid.to_vec());
+    let dist = Arc::new(Mutex::new(HashSet::<(i32, i32)>::new()));
+
+    let rows_per = (glen + threads - 1) / threads;
 
     let mut handles = Vec::new();
 
     for t in 0..threads {
-        let start = t * chunk;
-        let end = if t == threads-1 { grid.len() } else { (t+1)*chunk };
+        let start_row = t * rows_per;
+        if start_row >= glen {
+            break;
+        }
+
+        let end_row = ((t + 1) * rows_per).min(glen);
 
         let grid = Arc::clone(&grid);
         let dist = Arc::clone(&dist);
@@ -83,13 +77,15 @@ pub fn part_1(grid: &[u8]) -> usize {
         handles.push(thread::spawn(move || {
             let mut local = HashSet::new();
 
-            for pos in start..end {
-                if grid[pos] == b'@' {
-                    get_n_adjacent(&grid, pos, glen, &mut local);
+            for r in start_row..end_row {
+                for c in 0..glen {
+                    let pos = r * glen + c;
+                    if grid[pos] == b'@' {
+                        get_adjacent(&grid, pos, glen_i, &mut local);
+                    }
                 }
             }
 
-            // merge local set into global
             dist.lock().unwrap().extend(local);
         }));
     }
