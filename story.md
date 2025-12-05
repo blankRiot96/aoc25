@@ -13,5 +13,16 @@ You finally make it inside the base and ride an elevator to its only stop: The G
 Through there, you can reach the lobby, through which you can get to all the places in the north pole base.<br>
 However, the gift shop clerk finds you and asks for your help! An elf kid messed around with the computer and fucked it all up. There are a BUNCH of invalid product IDs. Luckily, the clerk and his team already started listing the ranges where the invalid product IDs could exist!<br>
 <br>
-You just need to go through them and check for invalid IDs: If the ID is a number which is kinda like, a palindrome, but not really. It's a number that can be made by repeating one number twice. Like 1212 can be made by repeating 12
+You just need to go through them and check for invalid IDs: If the ID is a number which is kinda like, a palindrome, but not really. It's a number that can be made by repeating one number twice. Like 1212 can be made by repeating 12 twice
 
+### Day 3
+Now you try to get to the elevators in the main lobby, but unfortunately they are down right now!<br>
+It seems that it needs some extra power from the batteries, your task is to select the batteries in each "bank" (a group of batteries) which form the highest joltage! Each battery has a joltage rating, pick the two that form the largest number when put together (no rearranging order)
+
+### Day 4
+You finally get on one of them escalators and ride it down to the printing department. You don't need to decorate this place because they can make their own decorations, but what you do need to do is to get further inside so you can go to the next location. Unfortunately though, there are rolls of paper everywhere! So you get a forklift and start removing the ones that have less than 4 adjacent paper rolls
+
+### Day 5
+Your forklift breaks into the wall! And wow, there's a frickin cafeteria on the other side. Someone shouts something similar to: "at this rate we wont have time to do <some important work>! If only we hadn't switched to this new inventory system!"<br>
+<br>
+Curious, you ask what's going on. Turns out they need to find which of the available ingredients are fresh. The database is a bit complicated, so you help them by finding the fresh ingredients in it :)
