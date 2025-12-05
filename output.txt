@@ -1,0 +1,872 @@
+First range: 
+307684522928
+1110109620128
+- - - -
+Range selected: 
+794175129155
+1456801270414
+range.start < prev.end
+- - - -
+Range selected: 
+1456801270414
+1862815467074
+fresh range
+- - - -
+Range selected: 
+1655071119701
+2036139951240
+range.start < prev.end
+- - - -
+Range selected: 
+2581891194834
+2938209235899
+fresh range
+- - - -
+Range selected: 
+3203006528874
+3486334377171
+fresh range
+- - - -
+Range selected: 
+3869663920914
+4371641426307
+fresh range
+- - - -
+Range selected: 
+4625611056497
+5165363127104
+fresh range
+- - - -
+Range selected: 
+5375859256207
+6074618800137
+fresh range
+- - - -
+Range selected: 
+5375859256207
+6074618800137
+range.start < prev.end
+- - - -
+Range selected: 
+5754910159277
+5886781937871
+range.start < prev.end
+range completely smaller than prev
+- - - -
+Range selected: 
+5886781937871
+6074618800137
+range.start < prev.end
+- - - -
+Range selected: 
+6074618800137
+6919766515552
+fresh range
+- - - -
+Range selected: 
+7582330851238
+8221734138618
+fresh range
+- - - -
+Range selected: 
+7943475911805
+8678289919663
+range.start < prev.end
+- - - -
+Range selected: 
+7943475911805
+8410633326027
+range.start < prev.end
+range completely smaller than prev
+- - - -
+Range selected: 
+8410633326027
+8678289919663
+range.start < prev.end
+- - - -
+Range selected: 
+8410633326027
+8678289919663
+range.start < prev.end
+- - - -
+Range selected: 
+9091500660915
+9446359256314
+fresh range
+- - - -
+Range selected: 
+11051622749117
+17744961849726
+fresh range
+- - - -
+Range selected: 
+15519289873818
+17744961849726
+range.start < prev.end
+- - - -
+Range selected: 
+24453454414952
+24453454414952
+fresh range
+- - - -
+Range selected: 
+24453454414952
+27950126097685
+fresh range
+- - - -
+Range selected: 
+32060173997759
+38255039971914
+fresh range
+- - - -
+Range selected: 
+38255039971915
+38255039971915
+fresh range
+- - - -
+Range selected: 
+41118938014282
+47100018588253
+fresh range
+- - - -
+Range selected: 
+44981127782956
+48903279211723
+range.start < prev.end
+- - - -
+Range selected: 
+51788272107026
+59656827315788
+fresh range
+- - - -
+Range selected: 
+51788272107026
+59656827315788
+range.start < prev.end
+- - - -
+Range selected: 
+61698995041022
+69884347631459
+fresh range
+- - - -
+Range selected: 
+63766671898076
+65655952039632
+range.start < prev.end
+range completely smaller than prev
+- - - -
+Range selected: 
+71612729890033
+77571971108161
+fresh range
+- - - -
+Range selected: 
+71612729890033
+74419824655567
+range.start < prev.end
+range completely smaller than prev
+- - - -
+Range selected: 
+80580557918318
+82577264603263
+fresh range
+- - - -
+Range selected: 
+81926643832307
+83669224754435
+range.start < prev.end
+- - - -
+Range selected: 
+83350550926534
+85294997885460
+range.start < prev.end
+- - - -
+Range selected: 
+84374268985162
+86323996200785
+range.start < prev.end
+- - - -
+Range selected: 
+85907593907156
+87680707094354
+range.start < prev.end
+- - - -
+Range selected: 
+86910356821814
+88768842417878
+range.start < prev.end
+- - - -
+Range selected: 
+88220642965230
+90378292842065
+range.start < prev.end
+- - - -
+Range selected: 
+93932960914363
+93932960914363
+fresh range
+- - - -
+Range selected: 
+93932960914364
+97096041797051
+fresh range
+- - - -
+Range selected: 
+103362892420026
+105629678962499
+fresh range
+- - - -
+Range selected: 
+105629678962501
+109134858676431
+fresh range
+- - - -
+Range selected: 
+111378694375343
+115455699917052
+fresh range
+- - - -
+Range selected: 
+115455699917053
+119739127275498
+fresh range
+- - - -
+Range selected: 
+124216845078648
+129072508999878
+fresh range
+- - - -
+Range selected: 
+131862233254102
+136598229137385
+fresh range
+- - - -
+Range selected: 
+136598229137385
+136598229137385
+fresh range
+- - - -
+Range selected: 
+140940285560201
+141439781721936
+fresh range
+- - - -
+Range selected: 
+141069029205537
+141782831115740
+range.start < prev.end
+- - - -
+Range selected: 
+141069029205537
+141439781721936
+range.start < prev.end
+range completely smaller than prev
+- - - -
+Range selected: 
+144788333057957
+145642164960280
+fresh range
+- - - -
+Range selected: 
+147303259982849
+147549698244422
+fresh range
+- - - -
+Range selected: 
+147303259982849
+147549698244422
+range.start < prev.end
+- - - -
+Range selected: 
+147549698244422
+148092107411926
+fresh range
+- - - -
+Range selected: 
+147911543484598
+148626352214953
+range.start < prev.end
+- - - -
+Range selected: 
+148626352214953
+149317499860929
+fresh range
+- - - -
+Range selected: 
+149068657061301
+149592458212773
+range.start < prev.end
+- - - -
+Range selected: 
+149592458212773
+149955416319994
+fresh range
+- - - -
+Range selected: 
+155097583132186
+157151986572872
+fresh range
+- - - -
+Range selected: 
+157151986572873
+157151986572873
+fresh range
+- - - -
+Range selected: 
+161603134668167
+168016229054149
+fresh range
+- - - -
+Range selected: 
+163670453018644
+169458398765566
+range.start < prev.end
+- - - -
+Range selected: 
+172876836346765
+179828231865718
+fresh range
+- - - -
+Range selected: 
+174818460219114
+177642786566376
+range.start < prev.end
+range completely smaller than prev
+- - - -
+Range selected: 
+181639912998906
+187405189535396
+fresh range
+- - - -
+Range selected: 
+191539978545282
+199539933703255
+fresh range
+- - - -
+Range selected: 
+191539978545282
+195248997572481
+range.start < prev.end
+range completely smaller than prev
+- - - -
+Range selected: 
+201865410851062
+201865410851062
+fresh range
+- - - -
+Range selected: 
+201865410851063
+208132721112038
+fresh range
+- - - -
+Range selected: 
+213248850373267
+220165671211298
+fresh range
+- - - -
+Range selected: 
+215795681823224
+220165671211298
+range.start < prev.end
+- - - -
+Range selected: 
+224558106245926
+228408317456873
+fresh range
+- - - -
+Range selected: 
+228408317456873
+228408317456873
+fresh range
+- - - -
+Range selected: 
+233635116196780
+235336029221685
+fresh range
+- - - -
+Range selected: 
+235336029221686
+239583999322242
+fresh range
+- - - -
+Range selected: 
+241599152922884
+242808655043892
+fresh range
+- - - -
+Range selected: 
+242388859287558
+243657013061234
+range.start < prev.end
+- - - -
+Range selected: 
+243229285253014
+244572543121239
+range.start < prev.end
+- - - -
+Range selected: 
+244232460133381
+245777513292354
+range.start < prev.end
+- - - -
+Range selected: 
+245101961133800
+246661521061271
+range.start < prev.end
+- - - -
+Range selected: 
+246145812892023
+247251309735150
+range.start < prev.end
+- - - -
+Range selected: 
+247141173111092
+248195269505606
+range.start < prev.end
+- - - -
+Range selected: 
+247742893039025
+249250450106907
+range.start < prev.end
+- - - -
+Range selected: 
+248639241640267
+250344640596798
+range.start < prev.end
+- - - -
+Range selected: 
+249893716111862
+250989814662294
+range.start < prev.end
+- - - -
+Range selected: 
+254858524011711
+258882206286305
+fresh range
+- - - -
+Range selected: 
+254858524011711
+258882206286305
+range.start < prev.end
+- - - -
+Range selected: 
+262745896589483
+267424515756810
+fresh range
+- - - -
+Range selected: 
+267424515756812
+270066601161903
+fresh range
+- - - -
+Range selected: 
+272295175227785
+272295175227785
+fresh range
+- - - -
+Range selected: 
+272295175227785
+280630653823210
+fresh range
+- - - -
+Range selected: 
+282420790922884
+290825089106666
+fresh range
+- - - -
+Range selected: 
+284581219392036
+287127735445674
+range.start < prev.end
+range completely smaller than prev
+- - - -
+Range selected: 
+292967201192475
+299118069515275
+fresh range
+- - - -
+Range selected: 
+299118069515276
+299118069515276
+fresh range
+- - - -
+Range selected: 
+304970740108223
+309078563473549
+fresh range
+- - - -
+Range selected: 
+309078563473549
+309078563473549
+fresh range
+- - - -
+Range selected: 
+312280995013442
+314291814749698
+fresh range
+- - - -
+Range selected: 
+313424067821390
+316012763161771
+range.start < prev.end
+- - - -
+Range selected: 
+315257468674580
+317675035942738
+range.start < prev.end
+- - - -
+Range selected: 
+316846363862322
+319717981047088
+range.start < prev.end
+- - - -
+Range selected: 
+318817591194247
+321433929601467
+range.start < prev.end
+- - - -
+Range selected: 
+324039920477225
+329643132044797
+fresh range
+- - - -
+Range selected: 
+327274832235706
+329643132044797
+range.start < prev.end
+- - - -
+Range selected: 
+335849789798638
+335849789798638
+fresh range
+- - - -
+Range selected: 
+335849789798639
+338039926388684
+fresh range
+- - - -
+Range selected: 
+343342993115191
+348444105423794
+fresh range
+- - - -
+Range selected: 
+353198600177047
+356119063703160
+fresh range
+- - - -
+Range selected: 
+356119063703161
+359632553973214
+fresh range
+- - - -
+Range selected: 
+362937483688203
+367433797533915
+fresh range
+- - - -
+Range selected: 
+362937483688203
+367433797533915
+range.start < prev.end
+- - - -
+Range selected: 
+372913350007794
+376326840890411
+fresh range
+- - - -
+Range selected: 
+376326840890413
+379742847570968
+fresh range
+- - - -
+Range selected: 
+383059647557664
+386106067036209
+fresh range
+- - - -
+Range selected: 
+383059647557664
+391428151448820
+range.start < prev.end
+- - - -
+Range selected: 
+393407539311640
+398279097986826
+fresh range
+- - - -
+Range selected: 
+395749249678667
+400331556316934
+range.start < prev.end
+- - - -
+Range selected: 
+402485160566513
+403282601642719
+fresh range
+- - - -
+Range selected: 
+402485160566513
+402996070607518
+range.start < prev.end
+range completely smaller than prev
+- - - -
+Range selected: 
+405079208406968
+405660046218472
+fresh range
+- - - -
+Range selected: 
+405660046218472
+406464445503469
+fresh range
+- - - -
+Range selected: 
+407222990481964
+407711674000795
+fresh range
+- - - -
+Range selected: 
+407711674000795
+408308227200346
+fresh range
+- - - -
+Range selected: 
+408960907412757
+409871811407953
+fresh range
+- - - -
+Range selected: 
+409436008617675
+409871811407953
+range.start < prev.end
+- - - -
+Range selected: 
+409871811407953
+410317848010797
+fresh range
+- - - -
+Range selected: 
+410874486674553
+411556204897556
+fresh range
+- - - -
+Range selected: 
+410874486674553
+411043455686605
+range.start < prev.end
+range completely smaller than prev
+- - - -
+Range selected: 
+413258809107986
+417714294228933
+fresh range
+- - - -
+Range selected: 
+413258809107986
+413258809107986
+range.start < prev.end
+range completely smaller than prev
+- - - -
+Range selected: 
+425031887133980
+428925354127549
+fresh range
+- - - -
+Range selected: 
+425031887133980
+428925354127549
+range.start < prev.end
+- - - -
+Range selected: 
+433308411983642
+433877475331933
+fresh range
+- - - -
+Range selected: 
+433877475331933
+434165674107044
+fresh range
+- - - -
+Range selected: 
+433877475331933
+434618989488580
+range.start < prev.end
+- - - -
+Range selected: 
+434932830803014
+435578076468333
+fresh range
+- - - -
+Range selected: 
+435211085990270
+436004729023784
+range.start < prev.end
+- - - -
+Range selected: 
+435477646107434
+436004729023784
+range.start < prev.end
+- - - -
+Range selected: 
+437430160816383
+437912720262218
+fresh range
+- - - -
+Range selected: 
+438498997381838
+438635963627099
+fresh range
+- - - -
+Range selected: 
+438928237107625
+439766507508486
+fresh range
+- - - -
+Range selected: 
+439766507508486
+440371147822373
+fresh range
+- - - -
+Range selected: 
+440371147822373
+440938433143202
+fresh range
+- - - -
+Range selected: 
+441404534158889
+441670875906124
+fresh range
+- - - -
+Range selected: 
+442415536818876
+445332303039440
+fresh range
+- - - -
+Range selected: 
+444361684514399
+446989989221557
+range.start < prev.end
+- - - -
+Range selected: 
+445953383992681
+448411380758156
+range.start < prev.end
+- - - -
+Range selected: 
+447576091595224
+450467703765211
+range.start < prev.end
+- - - -
+Range selected: 
+449386234224753
+452115392068715
+range.start < prev.end
+- - - -
+Range selected: 
+454018108501111
+462089665975548
+fresh range
+- - - -
+Range selected: 
+456809042678061
+458227093285318
+range.start < prev.end
+range completely smaller than prev
+- - - -
+Range selected: 
+463407578410441
+466222675937857
+fresh range
+- - - -
+Range selected: 
+463407578410441
+469970025274094
+range.start < prev.end
+- - - -
+Range selected: 
+473406359132554
+478434365075480
+fresh range
+- - - -
+Range selected: 
+478434365075482
+481569819739865
+fresh range
+- - - -
+Range selected: 
+485564841619712
+491054112566329
+fresh range
+- - - -
+Range selected: 
+491054112566330
+491054112566330
+fresh range
+- - - -
+Range selected: 
+494741622964928
+498685252592713
+fresh range
+- - - -
+Range selected: 
+498685252592714
+500535937758878
+fresh range
+- - - -
+Range selected: 
+505513053445065
+509602401977774
+fresh range
+- - - -
+Range selected: 
+509602401977774
+509602401977774
+fresh range
+- - - -
+Range selected: 
+516491003250364
+518990617277806
+fresh range
+- - - -
+Range selected: 
+523718685006199
+530321229089646
+fresh range
+- - - -
+Range selected: 
+528281574171527
+530321229089646
+range.start < prev.end
+- - - -
+Range selected: 
+533885467078256
+538341980112087
+fresh range
+- - - -
+Range selected: 
+535862781913795
+541174836228383
+range.start < prev.end
+- - - -
+Range selected: 
+546570015578939
+546570015578939
+fresh range
+- - - -
+Range selected: 
+546570015578940
+550907277679863
+fresh range
+- - - -
+Range selected: 
+555014039423328
+560747532698997
+fresh range
+- - - -
+Range selected: 
+555014039423328
+555014039423328
+range.start < prev.end
+range completely smaller than prev
+343329651880526
