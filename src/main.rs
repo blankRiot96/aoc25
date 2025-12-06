@@ -11,5 +11,5 @@ mod day06;
 
 fn main() {
     let input = include_str!("inputs/day06.txt");
-    println!("{}", day06::part_1(input));
+    println!("{}", day06::part_2(input));
 }

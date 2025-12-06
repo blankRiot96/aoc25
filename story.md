@@ -26,3 +26,8 @@ You finally get on one of them escalators and ride it down to the printing depar
 Your forklift breaks into the wall! And wow, there's a frickin cafeteria on the other side. Someone shouts something similar to: "at this rate we wont have time to do <some important work>! If only we hadn't switched to this new inventory system!"<br>
 <br>
 Curious, you ask what's going on. Turns out they need to find which of the available ingredients are fresh. The database is a bit complicated, so you help them by finding the fresh ingredients in it :)
+
+### Day 6
+This is the dumbest one yet... You were taking a break after helping them with the kitchen work and re-enacting some movie scene... and you *fcking jumped into the trash chute*??? <br>
+<br>
+Well, white you're down there you meet a family of octopi and help the little one with his homework. It's a number and operator spreadsheet hell
