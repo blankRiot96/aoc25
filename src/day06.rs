@@ -1,6 +1,8 @@
 
 use std::simd::u64x64;
 use std::simd::num::SimdUint;
+use std::time::Instant;
+
 
 pub fn part_1(input: &str) -> u64 {
     let ops_line = input.lines().last().unwrap().as_bytes();
@@ -83,120 +85,88 @@ pub fn part_1(input: &str) -> u64 {
 }
 
 
-pub fn part_2(input: &str) -> u64 {
-    let ops_line = input.lines().last().unwrap().as_bytes();
-    let mut ops: Vec<u8> = Vec::with_capacity(1000);
-    let mut reachers: Vec<usize> = Vec::with_capacity(1000);
-    let mut reach_counter = 0usize;
 
-    for &b in ops_line {
-        if b != b' ' {
-            ops.push(b);
-            reachers.push(reach_counter);
+fn transpose(grid: Vec<Vec<&u8>>) -> Vec<Vec<u8>> {
+    let grid_n_rows = grid.len();
+    let grid_n_cols = grid[0].len();
+    let mut posed = vec![vec![0u8; grid_n_rows]; grid_n_cols];
+    for (row_index, row) in grid.iter().enumerate() {
+        for (col_index, col) in row.iter().enumerate() {
+            posed[grid_n_cols - col_index - 1][row_index] = **col;
         }
-        reach_counter += 1;
     }
+    posed
+}
 
-    let ops_ptr = ops.as_ptr();
-    let rows: Vec<&str> = input.lines().take(4).collect();
-    let w = ops.len();
-    let n_vecs = (w + 63) / 64;
+#[inline(always)]
+fn fastu64(s: Vec<u8>) -> u64 {
+    let mut x = 0u64;
+    for b in s {
+        println!("{b}");
+        if b == b' ' || b == 0 {
+            continue;
+        }
+        x = x * 10 + (b - b'0') as u64;
+    }
+    x
+}
 
+pub fn part_2(input: &str) -> u64 {
+    let start = Instant::now();
+    let mut lines = input.lines();
+    let grid: Vec<Vec<&u8>> = vec![
+        lines.next().unwrap().as_bytes().iter().collect::<Vec<&u8>>(),
+        lines.next().unwrap().as_bytes().iter().collect::<Vec<&u8>>(),
+        lines.next().unwrap().as_bytes().iter().collect::<Vec<&u8>>(),
+        lines.next().unwrap().as_bytes().iter().collect::<Vec<&u8>>(),
+        lines.next().unwrap().split_ascii_whitespace().map(|c| &c.as_bytes()[0]).collect::<Vec<&u8>>(),
+    ];
+    let n_vecs = (grid[4].len() + 63) / 64;
+    let mut rows = transpose(grid);
+    
     let mut add_rows: Vec<Vec<u64x64>> = vec![vec![u64x64::splat(0); n_vecs]; 4];
     let mut mult_rows: Vec<Vec<u64x64>> = vec![vec![u64x64::splat(0); n_vecs]; 4];
     
-    let mut num_rows: Vec<Vec<&str>> = Vec::with_capacity(4);
-    for row_index in 0..4 {
-        let mut num_row: Vec<&str> = Vec::new();
-        let mut start = 0;
-        let mut raminos = reachers.iter();
-        raminos.next();
-        for end in raminos {
-            let num = &rows[row_index][start..*end-1];
-            num_row.push(num);
-            // print!("{num},");
-            start = *end;
-        }
-        // println!();
-        num_rows.push(num_row);
-    }
-    
     let mut add_pointer = 0usize;
     let mut mult_pointer = 0usize;
-    for (colp, op) in ops.iter().enumerate() {
-        let flat_num_1 = num_rows[0][colp].as_bytes();
-        let flat_num_2 = num_rows[1][colp].as_bytes();
-        let flat_num_3 = num_rows[2][colp].as_bytes();
-        let flat_num_4 = num_rows[3][colp].as_bytes();
 
-        for flat_col in 0..4 {
-            if flat_col == flat_num_1.len() {
-                break;
+    let mut nums: Vec<u64> = Vec::new();
+    for num in rows {
+        if *num.last().unwrap() == b'+' {
+            let n = fastu64(num[..num.len() - 1].to_vec());
+            nums.push(n);
+            for (row_index, nu) in nums.iter().enumerate() {
+                add_rows[row_index % 4][add_pointer / 64][add_pointer % 64] = *nu;
             }
-            let d1000 = if flat_num_1[flat_col] != b' ' {
-                ((flat_num_1[flat_col] - b'0') as u64) * 1000u64
-            } else {
-                0
-            };
-            
-            let d100 = if flat_num_2[flat_col] != b' ' {
-                ((flat_num_2[flat_col] - b'0') as u64) * 100u64
-            } else {
-                0
-            };
-            
-            let d10 = if flat_num_3[flat_col] != b' ' {
-                ((flat_num_3[flat_col] - b'0') as u64) * 10u64
-            } else {
-                0
-            };
-             
-            let d = if flat_num_4[flat_col] != b' ' {
-                ((flat_num_4[flat_col] - b'0') as u64)
-            } else {
-                0
-            };       
-
-
-            let num = d1000 + d100 + d10 + d;
-
-
-            if *op == b'+' {
-                let v = add_pointer >> 6;
-                let p = add_pointer & 63;
-                unsafe {
-                    add_rows
-                        .get_unchecked_mut(flat_col)
-                        .get_unchecked_mut(v)
-                        .as_mut_array()[p] = num;
-                }
-                add_pointer += 1;
-            } else {
-                 let v = mult_pointer >> 6;
-                let p = mult_pointer & 63;
-                unsafe {
-                    mult_rows
-                        .get_unchecked_mut(flat_col)
-                        .get_unchecked_mut(v)
-                        .as_mut_array()[p] = num;
-                }
-                mult_pointer += 1;
+            add_pointer += 1;
+            nums.clear();
+        } else if *num.last().unwrap() == b'*' {
+            let n = fastu64(num[..num.len() - 1].to_vec());
+            nums.push(n);
+            for (row_index, nu) in nums.iter().enumerate() {
+                mult_rows[row_index % 4][mult_pointer / 64][mult_pointer % 64] = *nu;
             }
-
+            mult_pointer += 1;
+            nums.clear();
+        } else {
+            let n = fastu64(num);
+            nums.push(n);
         }
     }
 
-
+    println!("Parsing: {}µs", start.elapsed().as_micros());
+    
+    let start = Instant::now();
     let mut total = 0;
 
     for vi in 0..n_vecs {
         let res_add = add_rows[0][vi] + add_rows[1][vi] + add_rows[2][vi] + add_rows[3][vi];
         total += res_add.reduce_sum();
+
         let res_mult = mult_rows[0][vi] * mult_rows[1][vi] * mult_rows[2][vi] * mult_rows[3][vi];
         total += res_mult.reduce_sum();
     }
 
+    println!("Calc: {}µs", start.elapsed().as_micros());
     total
 }
-
-
