@@ -1,80 +1,66 @@
-use std::simd::u64x64;
+
 use std::simd::num::SimdUint;
-use std::time::Instant;
+use std::simd::u64x64;
+
+#[inline(always)]
+fn fastu64(s: &str) -> u64 {
+    let mut x = 0u64;
+    for &b in s.as_bytes() {
+        x = x * 10 + (b - b'0') as u64;
+    }
+    x
+}
 
 pub fn part_1(input: &str) -> u64 {
-    let start = Instant::now();
+    let ops: Vec<u8> = input
+        .lines()
+        .last()
+        .unwrap()
+        .as_bytes()
+        .iter()
+        .copied()
+        .filter(|&b| b != b' ')
+        .collect();
+    // ops.reverse();
 
-    let inputb = input.as_bytes();
-    let mut ops = Vec::new();
-    let mut i = inputb.len() - 1;
-    loop {
-        if inputb[i] == b' ' {
-            i -= 1;
-            continue;
-        }
-        ops.push(inputb[i]); 
+    let rows: Vec<&str> = input.lines().take(4).collect();
+    let w = ops.len();
+    let n_vecs = (w + 63) / 64;
 
-        i -= 1;
-        if inputb[i] == b'\n' {
-            break;
-        } 
-    } 
-    // println!("{:?}", ops);
+    let mut add_rows: Vec<Vec<u64x64>> = vec![vec![u64x64::splat(0); n_vecs]; 4];
+    let mut mult_rows: Vec<Vec<u64x64>> = vec![vec![u64x64::splat(0); n_vecs]; 4];
 
-    // let n_vecs = ((ops.len() / 64) + 1);
-    let mut add_rows: Vec<Vec<u64x64>> = Vec::with_capacity(4);
-    let mut mult_rows: Vec<Vec<u64x64>> = Vec::with_capacity(4);
-    
-    for (row_index, row) in input.lines().take(4).enumerate() {
-        add_rows.push(Vec::new());
-        mult_rows.push(Vec::new());
+    for row_index in 0..4 {
+        let mut add_pointer = 0usize;
+        let mut mult_pointer = 0usize;
 
-        let mut col_pointer = ops.len() - 1;
-        let mut add_pointer = 0;
-        let mut mult_pointer = 0;
-        for num in row.split(" ") {
-            if num.len() == 0 {
-                continue;
-            }
+        for (i, num) in rows[row_index].split_ascii_whitespace().enumerate() {
+            let n = fastu64(num);
+            let op = ops[i];
 
-            let n = num.parse::<u64>().unwrap();
-            
-            if ops[col_pointer] == b'+' {
-                if add_pointer % 64 == 0 {
-                    add_rows[row_index].push(u64x64::splat(0));
-                }
-                let add_vec_pointer = add_pointer / 64;
-                add_rows[row_index][add_vec_pointer][add_pointer % 64] = n;
+            if op == b'+' {
+                let v = add_pointer >> 6;
+                let p = add_pointer & 63;
+                add_rows[row_index][v][p] = n;
                 add_pointer += 1;
             } else {
-                if mult_pointer % 64 == 0 {
-                    mult_rows[row_index].push(u64x64::splat(0));
-                }
-                let mult_vec_pointer = mult_pointer / 64;
-                mult_rows[row_index][mult_vec_pointer][mult_pointer % 64] = n;
+                let v = mult_pointer >> 6;
+                let p = mult_pointer & 63;
+                mult_rows[row_index][v][p] = n;
                 mult_pointer += 1;
             }
-            
-            if col_pointer == 0 {break;}
-            col_pointer -= 1;
         }
     }
 
-    println!("Parsing: {}µs", start.elapsed().as_micros());
-    
-    let start = Instant::now();
     let mut total = 0;
 
-    for vi in 0..(add_rows[0].len()) {
+    for vi in 0..n_vecs {
         let res_add = add_rows[0][vi] + add_rows[1][vi] + add_rows[2][vi] + add_rows[3][vi];
         total += res_add.reduce_sum();
-    }
-    
-    for vi in 0..(mult_rows[0].len()) {
+
         let res_mult = mult_rows[0][vi] * mult_rows[1][vi] * mult_rows[2][vi] * mult_rows[3][vi];
         total += res_mult.reduce_sum();
     }
-    println!("Calc: {}µs", start.elapsed().as_micros());
     total
 }
+

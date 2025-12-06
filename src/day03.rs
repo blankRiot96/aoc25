@@ -1,4 +1,3 @@
-use itertools::Itertools;
 
 pub fn part_1(input: &str) -> u64 {
     let mut sum = 0u64;
