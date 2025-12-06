@@ -46,7 +46,7 @@ fn get_num(digits: Vec<u8>) -> u128 {
 pub fn part_2(input: &str) -> u128 {
     let mut total = 0u128;
 
-    for bank in input.lines()  {
+    for bank in input.lines() {
         let k = 12;
         let mut dro = bank.len() - k;
         let mut digits: Vec<u8> = Vec::new();
@@ -57,7 +57,7 @@ pub fn part_2(input: &str) -> u128 {
             }
             digits.push(*c);
         }
-        
+
         digits.truncate(k);
         let num = get_num(digits);
         total += num;

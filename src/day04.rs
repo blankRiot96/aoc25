@@ -40,24 +40,108 @@ fn get_n_adjacent(
 }
 
 pub fn part_1(input: &str) -> usize {
-    let grid = input
-        .lines()
-        .map(|line| line.chars().collect::<Vec<char>>())
-        .collect::<Vec<Vec<char>>>();
-    let glen = grid.len() as i32;
+    let lines: Vec<&str> = input.lines().collect();
+    let rows = lines.len();
+    let cols = lines[0].len();
 
-    let mut dist = HashSet::with_capacity(1500);
+    let chunks_per_row = (cols + 63) / 64;
 
-    for (row, line) in grid.iter().enumerate() {
-        for (col, paper) in line.iter().enumerate() {
-            if *paper != '@' {
-                continue;
+    let mut grid: Vec<Vec<u64>> = Vec::with_capacity(rows);
+    for line in lines.iter() {
+        let mut chunks = vec![0u64; chunks_per_row];
+        for (col, &b) in line.as_bytes().iter().enumerate() {
+            if b == b'@' {
+                let chunk = col / 64;
+                let bit = col % 64;
+                chunks[chunk] |= 1u64 << bit;
             }
-            get_n_adjacent(&grid, row, col, glen, &mut dist);
+        }
+        grid.push(chunks);
+    }
+
+    let mut accessible = 0usize;
+
+    let get_bit = |r: isize,
+                   col: isize,
+                   grid: &Vec<Vec<u64>>,
+                   rows: usize,
+                   cols: usize,
+                   chunks_per_row: usize|
+     -> u8 {
+        if r < 0 || r as usize >= rows {
+            return 0;
+        }
+        if col < 0 || col as usize >= cols {
+            return 0;
+        }
+        let ci = (col as usize) / 64;
+        let bi = (col as usize) % 64;
+        ((grid[r as usize][ci] >> bi) & 1) as u8
+    };
+
+    for r in 0..rows {
+        for chunk in 0..chunks_per_row {
+            let mut mask = grid[r][chunk];
+            while mask != 0 {
+                let bit_idx = mask.trailing_zeros() as usize;
+                mask &= mask - 1;
+
+                let col = chunk * 64 + bit_idx;
+                if col >= cols {
+                    continue;
+                }
+
+                let mut count = 0u8;
+                let row_isize = r as isize;
+                let col_isize = col as isize;
+
+                count += get_bit(
+                    row_isize - 1,
+                    col_isize - 1,
+                    &grid,
+                    rows,
+                    cols,
+                    chunks_per_row,
+                );
+                count += get_bit(row_isize - 1, col_isize, &grid, rows, cols, chunks_per_row);
+                count += get_bit(
+                    row_isize - 1,
+                    col_isize + 1,
+                    &grid,
+                    rows,
+                    cols,
+                    chunks_per_row,
+                );
+
+                count += get_bit(row_isize, col_isize - 1, &grid, rows, cols, chunks_per_row);
+                count += get_bit(row_isize, col_isize + 1, &grid, rows, cols, chunks_per_row);
+
+                count += get_bit(
+                    row_isize + 1,
+                    col_isize - 1,
+                    &grid,
+                    rows,
+                    cols,
+                    chunks_per_row,
+                );
+                count += get_bit(row_isize + 1, col_isize, &grid, rows, cols, chunks_per_row);
+                count += get_bit(
+                    row_isize + 1,
+                    col_isize + 1,
+                    &grid,
+                    rows,
+                    cols,
+                    chunks_per_row,
+                );
+
+                if count < 4 {
+                    accessible += 1;
+                }
+            }
         }
     }
 
-    dist.len()
+    accessible
 }
 
 pub fn part_2(input: &str) -> usize {
