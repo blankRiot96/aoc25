@@ -8,8 +8,9 @@ mod day03;
 mod day04;
 mod day05;
 mod day06;
+mod day07;
 
 fn main() {
-    let input = include_str!("inputs/day06.txt");
-    println!("{}", day06::part_2(input));
+    let input = include_str!("inputs/day07.txt");
+    println!("{}", day07::part_1(input));
 }
