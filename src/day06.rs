@@ -2,7 +2,7 @@
 use std::simd::u64x64;
 use std::simd::num::SimdUint;
 use std::time::Instant;
-
+use std::str;
 
 pub fn part_1(input: &str) -> u64 {
     let ops_line = input.lines().last().unwrap().as_bytes();
@@ -86,6 +86,7 @@ pub fn part_1(input: &str) -> u64 {
 
 
 
+
 fn transpose(grid: Vec<Vec<&u8>>) -> Vec<Vec<u8>> {
     let grid_n_rows = grid.len();
     let grid_n_cols = grid[0].len();
@@ -102,7 +103,6 @@ fn transpose(grid: Vec<Vec<&u8>>) -> Vec<Vec<u8>> {
 fn fastu64(s: Vec<u8>) -> u64 {
     let mut x = 0u64;
     for b in s {
-        println!("{b}");
         if b == b' ' || b == 0 {
             continue;
         }
@@ -119,54 +119,86 @@ pub fn part_2(input: &str) -> u64 {
         lines.next().unwrap().as_bytes().iter().collect::<Vec<&u8>>(),
         lines.next().unwrap().as_bytes().iter().collect::<Vec<&u8>>(),
         lines.next().unwrap().as_bytes().iter().collect::<Vec<&u8>>(),
-        lines.next().unwrap().split_ascii_whitespace().map(|c| &c.as_bytes()[0]).collect::<Vec<&u8>>(),
+        // lines.next().unwrap().split_ascii_whitespace().map(|c| &c.as_bytes()[0]).collect::<Vec<&u8>>(),
+
+        lines.next().unwrap().as_bytes().iter().collect::<Vec<&u8>>(),
     ];
-    let n_vecs = (grid[4].len() + 63) / 64;
+    // let n_vecs = (grid[4].len() + 63) / 64;
     let mut rows = transpose(grid);
     
-    let mut add_rows: Vec<Vec<u64x64>> = vec![vec![u64x64::splat(0); n_vecs]; 4];
-    let mut mult_rows: Vec<Vec<u64x64>> = vec![vec![u64x64::splat(0); n_vecs]; 4];
+    // let mut add_rows: Vec<Vec<u64x64>> = vec![vec![u64x64::splat(0); n_vecs]; 4];
+    // let mut mult_rows: Vec<Vec<u64x64>> = vec![vec![u64x64::splat(1); n_vecs]; 4];
+    //
+    // let mut add_pointer = 0usize;
+    // let mut mult_pointer = 0usize;
     
-    let mut add_pointer = 0usize;
-    let mut mult_pointer = 0usize;
-
+    let mut sum = 0;
     let mut nums: Vec<u64> = Vec::new();
     for num in rows {
-        if *num.last().unwrap() == b'+' {
+        // println!("Line: {}", str::from_utf8(&num).unwrap());
+        let op = *num.last().unwrap();
+        if op == b'+' {
             let n = fastu64(num[..num.len() - 1].to_vec());
-            nums.push(n);
-            for (row_index, nu) in nums.iter().enumerate() {
-                add_rows[row_index % 4][add_pointer / 64][add_pointer % 64] = *nu;
+            if n != 0 {
+                nums.push(n);
             }
-            add_pointer += 1;
+
+            // println!("Operation with: {}", op as char);
+            // println!("Numbers consumed: {nums:?}");
+            sum += nums.iter().sum::<u64>();
+            // for (row_index, nu) in nums.iter().enumerate() {
+            //     add_rows[row_index][add_pointer / 64][add_pointer % 64] = *nu;
+            // }
+            // add_pointer += 1;
             nums.clear();
-        } else if *num.last().unwrap() == b'*' {
+        } else if op == b'*' {
             let n = fastu64(num[..num.len() - 1].to_vec());
-            nums.push(n);
-            for (row_index, nu) in nums.iter().enumerate() {
-                mult_rows[row_index % 4][mult_pointer / 64][mult_pointer % 64] = *nu;
+            if n != 0 {
+                nums.push(n);
             }
-            mult_pointer += 1;
+
+            // println!("Operation with: {}", op as char);
+            // println!("Numbers consumed: {nums:?}");
+            sum += nums.iter().product::<u64>();
+            // for (row_index, nu) in nums.iter().enumerate() {
+            //     mult_rows[row_index][mult_pointer / 64][mult_pointer % 64] = *nu;
+            // }
+            // mult_pointer += 1;
             nums.clear();
         } else {
-            let n = fastu64(num);
-            nums.push(n);
+            let n = fastu64(num[..num.len() - 1].to_vec());
+            if n != 0 {
+                nums.push(n);
+            }
         }
     }
 
-    println!("Parsing: {}µs", start.elapsed().as_micros());
+    println!("Total: {}µs", start.elapsed().as_micros());
     
-    let start = Instant::now();
-    let mut total = 0;
-
-    for vi in 0..n_vecs {
-        let res_add = add_rows[0][vi] + add_rows[1][vi] + add_rows[2][vi] + add_rows[3][vi];
-        total += res_add.reduce_sum();
-
-        let res_mult = mult_rows[0][vi] * mult_rows[1][vi] * mult_rows[2][vi] * mult_rows[3][vi];
-        total += res_mult.reduce_sum();
-    }
-
-    println!("Calc: {}µs", start.elapsed().as_micros());
-    total
+    // let start = Instant::now();
+    // let mut total = 0;
+    //
+    // for vi in 0..n_vecs {
+    //     let res_add = (add_rows[0][vi] + add_rows[1][vi] + add_rows[2][vi] + add_rows[3][vi]).reduce_sum();
+    //     if res_add == 0 {
+    //         break;
+    //     }
+    //     total += res_add;
+    // } 
+    // for vi in 0..n_vecs {
+    //     let res_mult = (mult_rows[0][vi] * mult_rows[1][vi] * mult_rows[2][vi] * mult_rows[3][vi]).reduce_sum();
+    //     if res_mult == 1 {
+    //         println!("{:?}", mult_rows[0][vi]);
+    //         break;
+    //     }
+    //     total += res_mult;
+    // }
+    //
+    // println!("Calc: {}µs", start.elapsed().as_micros());
+    
+    // println!("Expected: 9170286552289");
+    // println!("Got:      {sum}");
+    // println!("Got:      {total}");
+    sum
 }
+
