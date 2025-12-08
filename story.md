@@ -31,3 +31,10 @@ Curious, you ask what's going on. Turns out they need to find which of the avail
 This is the dumbest one yet... You were taking a break after helping them with the kitchen work and re-enacting some movie scene... and you *fcking jumped into the trash chute*??? <br>
 <br>
 Well, white you're down there you meet a family of octopi and help the little one with his homework. It's a number and operator spreadsheet hell
+
+### Day 7
+So you exit the trash chute, just like that, and then end up in some research lab. You find a teleporter there and... the intrusive thoughts win, you try using it.<br>
+<br>
+Welp, you end up in some weird place and now the teleporter is broken :c<br>
+So before you start fixing it, you try learning about the teleporter by debugging it using all the equipment available in the lab.<br>
+You find out it's using tachyon beams and start learning about the beam splitting properties of the teleporter, how many times does times does it split?

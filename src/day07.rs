@@ -1,4 +1,4 @@
-use std::simd::u8x64;
+use std::simd::{u8x64, u64x64};
 use std::simd::prelude::{SimdPartialEq, SimdPartialOrd};
 
 const TWO_SPLAT: u8x64 = u8x64::splat(2);
@@ -91,4 +91,73 @@ pub fn part_1(input: &str) -> u32 {
     println!("Expected: 1537");
     println!("Got:      {n_splits}");
     n_splits
+}
+
+
+pub fn part_2(input: &str) -> u64 {
+    let mut timelines = vec![
+        u64x64::splat(0),
+        u64x64::splat(0),
+        u64x64::splat(0),
+    ];
+
+    timelines[1][6] = 1;
+
+    let mut lines = input.lines();
+    lines.next();
+    lines.next();
+
+    while let Some(line) = lines.next() {
+        let splitter_masks = vec![
+            to_split_mask(&line[..64]),
+            to_split_mask(&line[64..128]),
+            to_split_mask(&line[128..]),
+        ];
+
+        let mut next_timelines = vec![
+            u64x64::splat(0),
+            u64x64::splat(0),
+            u64x64::splat(0),
+        ];
+
+        for chunk_index in 0..3 {
+            let splitter_chunk = splitter_masks[chunk_index];
+
+            for i in 0..64 {
+                let count = timelines[chunk_index][i];
+                if count == 0 {
+                    continue;
+                }
+
+                if splitter_chunk[i] == 1 {
+                    if i > 0 {
+                        next_timelines[chunk_index][i - 1] += count;
+                    } else if chunk_index > 0 {
+                        next_timelines[chunk_index - 1][63] += count;
+                    }
+
+                    if i < 63 {
+                        next_timelines[chunk_index][i + 1] += count;
+                    } else if chunk_index < 2 {
+                        next_timelines[chunk_index + 1][0] += count;
+                    }
+                } else {
+                    next_timelines[chunk_index][i] += count;
+                }
+            }
+        }
+
+        timelines = next_timelines;
+
+        lines.next();
+    }
+
+    let mut total = 0u64;
+    for chunk_index in 0..3 {
+        for i in 0..64 {
+            total += timelines[chunk_index][i];
+        }
+    }
+
+    total
 }
